@@ -10,13 +10,15 @@
     
     <style>
         :root {
-            --text: #0f172a;
-            --ice-glacier: #f0f9ff;
-            --clear-sky: #e0f2fe;
-            --deep-freeze: #bae6fd;
-            --accent-blue: #0ea5e9;
-            --glass: rgba(255, 255, 255, 0.25);
-            /* Abril Fatface 폰트 변수 */
+            /* 🌑 배경색을 시크한 다크 메탈릭/크롬 톤으로 변경 */
+            --text: #ffffff;
+            --text-dark: #0f172a;
+            /* 이미지의 딥한 무드를 담은 컬러셋 */
+            --dark-chrome: #05070a;
+            --deep-metallic: #111827;
+            --silver-glow: #334155;
+            --accent-blue: #ffffff; /* 하이엔드 무드를 위해 화이트 실버로 변경 */
+            --glass: rgba(255, 255, 255, 0.05);
             --font-abril: 'Abril Fatface', serif;
             --font-sans: 'Apple SD Gothic Neo', 'Pretendard', sans-serif;
         }
@@ -26,13 +28,13 @@
 
         body { 
             font-family: var(--font-sans); 
-            background-color: #ffffff; 
+            background-color: var(--dark-chrome); 
             color: var(--text); 
             overflow-x: hidden; 
             scroll-behavior: smooth; 
         }
 
-        /* ✨ 커스텀 커서 스타일 */
+        /* ✨ 커스텀 커서 스타일 (실버 강조) */
         #cursor-bundle {
             position: fixed;
             top: 0;
@@ -43,19 +45,17 @@
             z-index: 10000;
         }
 
-        /* 실버 화살표 커서 */
         .custom-pointer {
             position: absolute;
             width: 24px;
             height: 24px;
             background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
             clip-path: polygon(0% 0%, 100% 70%, 40% 70%, 0% 100%);
-            filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.15));
+            filter: drop-shadow(0px 0px 5px rgba(255,255,255,0.3));
             transform: translate(0, 0);
             z-index: 2;
         }
 
-        /* 별 모양 오브제 */
         .cursor-star {
             position: absolute;
             width: 40px;
@@ -68,30 +68,38 @@
             z-index: 1;
         }
 
-        /* 마우스 올렸을 때 별 모양이 커지는 효과 */
         .cursor-hovering .cursor-star {
             transform: translate(-50%, -50%) scale(1.8);
             opacity: 0.6;
-            background: radial-gradient(circle, #ffffff 0%, var(--accent-blue) 100%);
+            background: radial-gradient(circle, #ffffff 0%, #cbd5e1 100%);
         }
 
-        /* 빙하 느낌 배경 애니메이션 */
+        /* ✨ 이미지의 시크한 무드를 반영한 메탈릭 배경 애니메이션 */
         .bg-mesh {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: 
-                radial-gradient(at 0% 0%, var(--ice-glacier) 0, transparent 55%),
-                radial-gradient(at 100% 0%, var(--clear-sky) 0, transparent 50%),
-                radial-gradient(at 50% 50%, var(--deep-freeze) 0, transparent 65%);
+                radial-gradient(at 0% 0%, var(--deep-metallic) 0, transparent 55%),
+                radial-gradient(at 100% 0%, var(--dark-chrome) 0, transparent 50%),
+                radial-gradient(at 50% 50%, var(--silver-glow) 0, transparent 70%);
             background-size: 180% 180%; 
-            animation: iceFlow 20s ease-in-out infinite alternate;
+            animation: metallicFlow 15s ease-in-out infinite alternate;
         }
-        @keyframes iceFlow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+        /* 메탈릭한 질감을 위한 노이즈 오버레이 추가 */
+        .bg-mesh::after {
+            content: "";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+            opacity: 0.1;
+            pointer-events: none;
+        }
 
-        /* 네비게이션 */
+        @keyframes metallicFlow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+
+        /* 네비게이션 (시크 다크 버전) */
         nav {
             position: fixed; top: 0; width: 100%; padding: 30px 8%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000; backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .logo { 
@@ -113,7 +121,7 @@
             margin-left: 35px; 
             font-size: 0.85rem; 
             font-weight: 700; 
-            opacity: 0.7;
+            opacity: 0.6;
             transition: 0.3s; 
         }
         .nav-links a:hover { opacity: 1; }
@@ -127,31 +135,32 @@
             font-weight: 400;
             line-height: 0.95; 
             letter-spacing: -1px;
-            background: linear-gradient(to right, #cbd5e1 20%, #ffffff 45%, #ffffff 55%, #cbd5e1 80%);
+            /* 텍스트에도 실버 크롬 효과 적용 */
+            background: linear-gradient(to right, #94a3b8 20%, #ffffff 45%, #ffffff 55%, #94a3b8 80%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            -webkit-text-stroke: 1px rgba(148, 163, 184, 0.3);
             animation: shine 5s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
-        .hero p { margin-top: 30px; font-family: var(--font-sans); letter-spacing: 12px; opacity: 0.5; font-size: 0.8rem; font-weight: 700; color: #475569; }
+        .hero p { margin-top: 30px; font-family: var(--font-sans); letter-spacing: 12px; opacity: 0.5; font-size: 0.8rem; font-weight: 700; color: #cbd5e1; }
 
+        /* 카드 디자인 유지, 보더와 유리 효과만 조정 */
         .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 80px; }
         .item-card {
-            background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 40px;
+            background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px;
             padding: 50px; height: 720px; display: flex; flex-direction: column; justify-content: flex-end;
             transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
             background-size: cover; background-position: center;
         }
-        .item-card:hover { transform: translateY(-15px); border-color: #ffffff; }
-        .item-card span { font-size: 0.75rem; font-weight: 800; letter-spacing: 4px; color: var(--accent-blue); }
-        .item-card h2 { font-size: 2.2rem; font-weight: 700; margin-top: 10px; line-height: 1.1; }
+        .item-card:hover { transform: translateY(-15px); border-color: rgba(255,255,255,0.4); }
+        .item-card span { font-size: 0.75rem; font-weight: 800; letter-spacing: 4px; color: #94a3b8; }
+        .item-card h2 { font-size: 2.2rem; font-weight: 700; margin-top: 10px; line-height: 1.1; color: #fff; }
 
-        .info-section h3 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 35px; font-weight: 800; line-height: 1.1; }
-        .info-section p { font-size: 1.15rem; color: #475569; margin-bottom: 80px; line-height: 1.8; max-width: 800px; }
+        .info-section h3 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 35px; font-weight: 800; line-height: 1.1; color: #fff; }
+        .info-section p { font-size: 1.15rem; color: #94a3b8; margin-bottom: 80px; line-height: 1.8; max-width: 800px; }
 
-        footer { padding: 100px 8% 60px; display: flex; justify-content: space-between; border-top: 1px solid rgba(0,0,0,0.05); font-size: 0.8rem; opacity: 0.6; }
+        footer { padding: 100px 8% 60px; display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; opacity: 0.4; }
 
         .reveal { opacity: 0; transform: translateY(50px); transition: 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -182,12 +191,12 @@
     <section id="collection">
         <div class="grid-container">
             <div class="item-card reveal" style="background-image: url('fashion1.jpg');">
-                <span>01 NEW GLACIER</span>
-                <h2>Ethereal<br>Cloud-Knit</h2>
+                <span>01 NEW METALLIC</span>
+                <h2>Chrome<br>Distortion</h2>
             </div>
             <div class="item-card reveal" style="margin-top: 140px; background-image: url('fashion2.jpg');">
-                <span>02 ARCTIC LAYER</span>
-                <h2>Lucid<br>Layering</h2>
+                <span>02 DEEP SILVER</span>
+                <h2>Liquid<br>Identity</h2>
             </div>
         </div>
     </section>
@@ -195,7 +204,7 @@
     <section id="about-preview" class="info-section">
         <div class="reveal">
             <h3>Pure Identity,<br>Digital Organic.</h3>
-            <p>우리는 얼음의 투명함과 정제된 블루의 차가움 속에서 가장 선명한 자아를 제안합니다. 불필요한 장식을 배제하고 공기처럼 가벼운 실루엣을 담아냅니다.</p>
+            <p>우리는 금속의 날카로운 반사와 어둠 속의 정제된 빛을 통해 가장 선명한 자아를 제안합니다. 불필요한 모든 것을 걷어내고 차갑지만 깊이 있는 실루엣을 담아냅니다.</p>
             <a href="history.html" style="color: var(--text); font-weight: 800; text-decoration: none; border-bottom: 2px solid var(--text); padding-bottom: 5px; font-size: 0.9rem;">OUR STORY</a>
         </div>
     </section>
@@ -206,7 +215,6 @@
     </footer>
 
     <script>
-        // ✨ 커서 이동 및 효과 스크립트
         const bundle = document.getElementById('cursor-bundle');
         const pointer = document.querySelector('.custom-pointer');
         const star = document.querySelector('.cursor-star');
@@ -214,24 +222,18 @@
         window.addEventListener('mousemove', (e) => {
             const x = e.clientX;
             const y = e.clientY;
-            
-            // 포인터 위치 (화살표 끝이 마우스 끝에 맞게 조정)
             pointer.style.left = `${x}px`;
             pointer.style.top = `${y}px`;
-            
-            // 별 위치 (중심점 맞춤)
             star.style.left = `${x}px`;
             star.style.top = `${y}px`;
         });
 
-        // 링크 호버 시 별 커지는 로직
         const targets = document.querySelectorAll('a, button, .item-card');
         targets.forEach(t => {
             t.addEventListener('mouseenter', () => bundle.classList.add('cursor-hovering'));
             t.addEventListener('mouseleave', () => bundle.classList.remove('cursor-hovering'));
         });
 
-        // 기존 리빌 애니메이션
         const reveal = () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => {
