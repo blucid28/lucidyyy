@@ -10,12 +10,14 @@
 
     <style>
         :root {
-            --text: #0f172a;
-            --ice-glacier: #f0f9ff;
-            --clear-sky: #e0f2fe;
-            --deep-freeze: #bae6fd;
-            --accent-blue: #0ea5e9;
-            --glass: rgba(255, 255, 255, 0.25);
+            /* 🌑 통일된 다크 메탈릭 테마 변수 */
+            --text: #ffffff;
+            --text-muted: #94a3b8;
+            --dark-chrome: #05070a;
+            --deep-metallic: #111827;
+            --silver-glow: #334155;
+            --accent-silver: #e2e8f0;
+            --glass: rgba(255, 255, 255, 0.05);
             --font-abril: 'Abril Fatface', serif;
         }
 
@@ -24,106 +26,81 @@
 
         body { 
             font-family: 'Apple SD Gothic Neo', 'Pretendard', sans-serif; 
-            background-color: #ffffff; 
+            background-color: var(--dark-chrome); 
             color: var(--text); 
             overflow-x: hidden; 
             scroll-behavior: smooth; 
         }
 
-        /* ✨ 커스텀 커서 스타일 (메인과 동일) */
+        /* ✨ 커스텀 커서 스타일 (메인/히스토리와 동일) */
         #cursor-bundle {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 10000;
         }
-
         .custom-pointer {
-            position: absolute;
-            width: 24px;
-            height: 24px;
+            position: absolute; width: 24px; height: 24px;
             background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
             clip-path: polygon(0% 0%, 100% 70%, 40% 70%, 0% 100%);
-            filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.15));
+            filter: drop-shadow(0px 0px 5px rgba(255,255,255,0.3));
             z-index: 2;
         }
-
         .cursor-star {
-            position: absolute;
-            width: 40px;
-            height: 40px;
+            position: absolute; width: 40px; height: 40px;
             background: radial-gradient(circle, #ffffff 20%, #94a3b8 100%);
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            opacity: 0.3;
-            transform: translate(-50%, -50%) scale(0.6);
+            opacity: 0.3; transform: translate(-50%, -50%) scale(0.6);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
             z-index: 1;
         }
-
-        /* 호버 시 별이 커지는 효과 */
         .cursor-hovering .cursor-star {
             transform: translate(-50%, -50%) scale(1.8);
-            opacity: 0.6;
-            background: radial-gradient(circle, #ffffff 0%, var(--accent-blue) 100%);
+            opacity: 0.6; background: radial-gradient(circle, #ffffff 0%, #cbd5e1 100%);
         }
 
-        /* 메인과 동일한 빙하 느낌 배경 애니메이션 */
+        /* ✨ 메탈릭 배경 시스템 */
         .bg-mesh {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: 
-                radial-gradient(at 0% 0%, var(--ice-glacier) 0, transparent 55%),
-                radial-gradient(at 100% 0%, var(--clear-sky) 0, transparent 50%),
-                radial-gradient(at 50% 50%, var(--deep-freeze) 0, transparent 65%);
+                radial-gradient(at 0% 0%, var(--deep-metallic) 0, transparent 55%),
+                radial-gradient(at 100% 0%, var(--dark-chrome) 0, transparent 50%),
+                radial-gradient(at 50% 50%, var(--silver-glow) 0, transparent 70%);
             background-size: 180% 180%; 
-            animation: iceFlow 20s ease-in-out infinite alternate;
+            animation: metallicFlow 15s ease-in-out infinite alternate;
         }
-        @keyframes iceFlow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+        .bg-mesh::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+            opacity: 0.1; pointer-events: none;
+        }
+        @keyframes metallicFlow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 
         /* 네비게이션 */
         nav {
             position: fixed; top: 0; width: 100%; padding: 30px 8%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000; backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .logo { 
-            font-family: var(--font-abril);
-            font-size: 1.5rem; 
-            text-decoration: none; 
-            color: var(--text);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-family: var(--font-abril); font-size: 1.5rem; text-decoration: none; 
+            color: var(--text); text-transform: uppercase; letter-spacing: 1px;
         }
         .close-btn { 
-            text-decoration: none; 
-            color: var(--text); 
-            font-weight: 700; 
-            font-size: 0.85rem; 
-            letter-spacing: 2px;
-            opacity: 0.7;
-            transition: 0.3s;
+            text-decoration: none; color: var(--text); font-weight: 700; 
+            font-size: 0.85rem; letter-spacing: 2px; opacity: 0.5; transition: 0.3s;
         }
         .close-btn:hover { opacity: 1; }
 
         /* 헤더 섹션 */
         .header { padding: 220px 8% 100px; text-align: center; }
         .header h1 { 
-            font-family: var(--font-abril);
-            font-size: clamp(3rem, 10vw, 7rem); 
-            font-weight: 400; 
-            line-height: 0.8;
-            letter-spacing: -2px;
-            background: linear-gradient(to right, #cbd5e1 20%, #ffffff 45%, #ffffff 55%, #cbd5e1 80%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            -webkit-text-stroke: 1px rgba(148, 163, 184, 0.3);
+            font-family: var(--font-abril); font-size: clamp(3rem, 10vw, 7rem); 
+            font-weight: 400; line-height: 0.8; letter-spacing: -2px;
+            background: linear-gradient(to right, #94a3b8 20%, #ffffff 45%, #ffffff 55%, #94a3b8 80%);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: shine 5s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
-        .header p { margin-top: 30px; letter-spacing: 12px; opacity: 0.5; font-size: 0.9rem; font-weight: 700; color: #475569; }
+        .header p { margin-top: 30px; letter-spacing: 12px; opacity: 0.4; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); }
 
         /* 컨테이너 및 룩북 카드 */
         .container { padding: 0 8% 150px; display: flex; flex-direction: column; gap: 150px; align-items: center; }
@@ -133,14 +110,16 @@
             width: 100%; height: 130vh;
             background-size: cover; background-position: center;
             border-radius: 60px; 
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             background-color: var(--glass);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1s;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+            filter: brightness(0.8);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1s, filter 1s;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
         }
         .look-card:hover .img-box { 
             transform: scale(1.02); 
-            box-shadow: 0 40px 80px rgba(14, 165, 233, 0.1);
+            filter: brightness(1);
+            box-shadow: 0 40px 80px rgba(255, 255, 255, 0.05);
         }
         
         .look-desc { 
@@ -150,12 +129,12 @@
             align-items: flex-end;
             padding: 0 20px; 
         }
-        .look-desc h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
+        .look-desc h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
         .look-desc span { 
             font-size: 0.85rem; 
             font-weight: 800; 
             letter-spacing: 3px; 
-            color: var(--accent-blue); 
+            color: var(--text-muted); 
         }
 
         /* 스크롤 애니메이션 */
@@ -165,9 +144,9 @@
         footer { 
             padding: 100px 8% 60px; 
             text-align: center; 
-            border-top: 1px solid rgba(0,0,0,0.05);
+            border-top: 1px solid rgba(255,255,255,0.05);
             font-size: 0.85rem; 
-            opacity: 0.6; 
+            opacity: 0.3; 
             letter-spacing: 1px;
         }
     </style>
@@ -195,10 +174,10 @@
             <div class="img-box" style="background-image: url('look1.jpg');"></div>
             <div class="look-desc">
                 <div>
-                    <span>01_EDITORIAL</span>
-                    <h2>The Lucid Ray</h2>
+                    <span style="color: var(--accent-silver); opacity: 0.6;">01_EDITORIAL</span>
+                    <h2 style="margin-top:5px;">The Lucid Ray</h2>
                 </div>
-                <span style="color: var(--text); opacity: 0.4;">SS_26</span>
+                <span style="opacity: 0.4;">SS_26</span>
             </div>
         </div>
 
@@ -206,10 +185,10 @@
             <div class="img-box" style="background-image: url('look2.jpg');"></div>
             <div class="look-desc">
                 <div>
-                    <span>02_CONCEPT</span>
-                    <h2>Airy Texture</h2>
+                    <span style="color: var(--accent-silver); opacity: 0.6;">02_CONCEPT</span>
+                    <h2 style="margin-top:5px;">Airy Texture</h2>
                 </div>
-                <span style="color: var(--text); opacity: 0.4;">SS_26</span>
+                <span style="opacity: 0.4;">SS_26</span>
             </div>
         </div>
 
@@ -217,10 +196,10 @@
             <div class="img-box" style="background-image: url('look3.jpg');"></div>
             <div class="look-desc">
                 <div>
-                    <span>03_GLACIER</span>
-                    <h2>Frozen Silhouette</h2>
+                    <span style="color: var(--accent-silver); opacity: 0.6;">03_GLACIER</span>
+                    <h2 style="margin-top:5px;">Frozen Silhouette</h2>
                 </div>
-                <span style="color: var(--text); opacity: 0.4;">SS_26</span>
+                <span style="opacity: 0.4;">SS_26</span>
             </div>
         </div>
     </div>
@@ -228,7 +207,6 @@
     <footer>© 2026 BLUCID STUDIO INC. ALL RIGHTS RESERVED.</footer>
 
     <script>
-        // ✨ 커서 이동 및 효과 스크립트
         const bundle = document.getElementById('cursor-bundle');
         const pointer = document.querySelector('.custom-pointer');
         const star = document.querySelector('.cursor-star');
@@ -236,22 +214,18 @@
         window.addEventListener('mousemove', (e) => {
             const x = e.clientX;
             const y = e.clientY;
-            
             pointer.style.left = `${x}px`;
             pointer.style.top = `${y}px`;
-            
             star.style.left = `${x}px`;
             star.style.top = `${y}px`;
         });
 
-        // 링크 및 룩북 카드 호버 시 별 커지는 효과 적용
         const targets = document.querySelectorAll('a, button, .look-card');
         targets.forEach(t => {
             t.addEventListener('mouseenter', () => bundle.classList.add('cursor-hovering'));
             t.addEventListener('mouseleave', () => bundle.classList.remove('cursor-hovering'));
         });
 
-        // 기존 리빌 애니메이션
         const reveal = () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => {
