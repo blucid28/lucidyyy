@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLUCID | History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --text: #0f172a;
+            --ice-glacier: #f0f9ff;
+            --clear-sky: #e0f2fe;
+            --deep-freeze: #bae6fd;
+            --accent-blue: #0ea5e9;
+            --glass: rgba(255, 255, 255, 0.25);
+            --font-abril: 'Abril Fatface', serif;
+        }
+
+        /* ✨ 기본 커서 숨기기 */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+
+        body { 
+            font-family: 'Apple SD Gothic Neo', 'Pretendard', sans-serif; 
+            background-color: #ffffff; 
+            color: var(--text); 
+            overflow-x: hidden; 
+            line-height: 1.6; 
+            scroll-behavior: smooth; 
+        }
+
+        /* ✨ 커스텀 커서 스타일 (전체 페이지 통일) */
+        #cursor-bundle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        .custom-pointer {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+            clip-path: polygon(0% 0%, 100% 70%, 40% 70%, 0% 100%);
+            filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.15));
+            z-index: 2;
+        }
+
+        .cursor-star {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #ffffff 20%, #94a3b8 100%);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(0.6);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        /* 마우스 호버 시 별이 커지는 효과 */
+        .cursor-hovering .cursor-star {
+            transform: translate(-50%, -50%) scale(1.8);
+            opacity: 0.6;
+            background: radial-gradient(circle, #ffffff 0%, var(--accent-blue) 100%);
+        }
+
+        /* 메인과 동일한 빙하 배경 애니메이션 */
+        .bg-mesh {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: 
+                radial-gradient(at 0% 0%, var(--ice-glacier) 0, transparent 55%),
+                radial-gradient(at 100% 0%, var(--clear-sky) 0, transparent 50%),
+                radial-gradient(at 50% 50%, var(--deep-freeze) 0, transparent 65%);
+            background-size: 180% 180%; 
+            animation: iceFlow 20s ease-in-out infinite alternate;
+        }
+        @keyframes iceFlow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+
+        /* 네비게이션 */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 30px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .logo { 
+            font-family: var(--font-abril);
+            font-size: 1.5rem; 
+            text-decoration: none; 
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .close-btn { 
+            text-decoration: none; 
+            color: var(--text); 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            letter-spacing: 2px;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        .close-btn:hover { opacity: 1; }
+
+        /* 헤더 섹션 */
+        .about-header {
+            padding: 220px 8% 100px;
+            text-align: left;
+        }
+        .about-header h1 {
+            font-family: var(--font-abril);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, #cbd5e1 20%, #ffffff 45%, #ffffff 55%, #cbd5e1 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 1px rgba(148, 163, 184, 0.3);
+            animation: shine 5s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* 스토리 섹션 */
+        .content-section {
+            padding: 0 8% 150px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .content-section.reverse { direction: rtl; }
+        .content-section.reverse .text-box { direction: ltr; }
+
+        .image-box {
+            width: 100%;
+            height: 650px;
+            border-radius: 50px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+        .image-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .image-box:hover img { transform: scale(1.08); }
+
+        .text-box h2 { 
+            font-size: 2.8rem; 
+            margin-bottom: 25px; 
+            font-weight: 800; 
+            letter-spacing: -1px;
+            color: var(--text);
+        }
+        .text-box p { 
+            font-size: 1.15rem; 
+            color: #475569; 
+            text-align: justify; 
+            word-break: keep-all;
+            line-height: 1.8;
+        }
+
+        /* 그리드 이미지 섹션 */
+        .image-grid {
+            padding: 0 8% 150px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .grid-item {
+            height: 450px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .grid-item img { width: 100%; height: 100%; object-fit: cover; transition: 1s; }
+        .grid-item:hover img { filter: brightness(1.1); }
+
+        /* 스크롤 애니메이션 */
+        .reveal { opacity: 0; transform: translateY(60px); transition: 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        footer { 
+            padding: 100px 8%; 
+            border-top: 1px solid rgba(0,0,0,0.05); 
+            text-align: center; 
+            font-size: 0.85rem; 
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 992px) {
+            .content-section { grid-template-columns: 1fr; gap: 50px; }
+            .image-box { height: 500px; }
+            .image-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor-bundle">
+        <div class="cursor-star"></div>
+        <div class="custom-pointer"></div>
+    </div>
+
+    <div class="bg-mesh"></div>
+    
+    <nav>
+        <a href="index.html" class="logo">BLUCID</a>
+        <a href="index.html" class="close-btn">CLOSE [X]</a>
+    </nav>
+
+    <header class="about-header">
+        <h1 class="reveal">The Philosophy<br>of Transparency.</h1>
+    </header>
+
+    <section class="content-section">
+        <div class="image-box reveal">
+            <img src="about1.jpg" alt="Brand Story 1">
+        </div>
+        <div class="text-box reveal">
+            <span style="font-weight: 800; color: var(--accent-blue); letter-spacing: 3px; font-size: 0.8rem;">01_ORIGIN</span>
+            <h2 style="margin-top: 10px;">Our Origin</h2>
+            <p>BLUCID는 'Lucid(명료한)'와 'Blue(푸른)'의 결합에서 시작되었습니다. 우리는 복잡한 세상 속에서 본질을 꿰뚫는 선명한 감각을 추구합니다. 하늘이 투명하게 비치는 물결처럼, 우리의 옷은 입는 이의 고유한 색깔을 덮지 않고 자연스럽게 드러내도록 설계되었습니다.</p>
+        </div>
+    </section>
+
+    <section class="content-section reverse">
+        <div class="image-box reveal">
+            <img src="about2.jpg" alt="Brand Story 2">
+        </div>
+        <div class="text-box reveal">
+            <span style="font-weight: 800; color: var(--accent-blue); letter-spacing: 3px; font-size: 0.8rem;">02_CONCEPT</span>
+            <h2 style="margin-top: 10px;">Digital Organic</h2>
+            <p>차가운 디지털 세계와 따뜻한 유기적 질감의 조화를 연구합니다. 최첨단 소재의 투명함과 천연 섬유의 부드러움을 결합하여, 미래적이면서도 지극히 인간적인 실루엣을 제안합니다. 이것이 우리가 정의하는 '디지털 오가닉'입니다.</p>
+        </div>
+    </section>
+
+    <section class="image-grid">
+        <div class="grid-item reveal"><img src="about3.jpg" alt="Detail 1"></div>
+        <div class="grid-item reveal" style="margin-top: 60px;"><img src="about4.jpg" alt="Detail 2"></div>
+        <div class="grid-item reveal"><img src="about5.jpg" alt="Detail 3"></div>
+    </section>
+
+    <section class="content-section">
+        <div class="image-box reveal">
+            <img src="about6.jpg" alt="Final Insight">
+        </div>
+        <div class="text-box reveal">
+            <span style="font-weight: 800; color: var(--accent-blue); letter-spacing: 3px; font-size: 0.8rem;">03_VISION</span>
+            <h2 style="margin-top: 10px;">A State of Lucidity</h2>
+            <p>우리는 단순히 패션을 파는 것이 아니라, 당신의 일상이 더 선명하고 가벼워지는 경험을 제공하고자 합니다. BLUCID와 함께 가장 맑은 상태의 당신을 마주해 보세요.</p>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 BLUCID STUDIO INC. <br>
+        <span style="opacity: 0.5; font-size: 0.75rem; margin-top: 10px; display: block;">Crafting Clarity and the Pure Future.</span>
+    </footer>
+
+    <script>
+        // ✨ 커서 이동 및 효과 스크립트
+        const bundle = document.getElementById('cursor-bundle');
+        const pointer = document.querySelector('.custom-pointer');
+        const star = document.querySelector('.cursor-star');
+
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            pointer.style.left = `${x}px`;
+            pointer.style.top = `${y}px`;
+            
+            star.style.left = `${x}px`;
+            star.style.top = `${y}px`;
+        });
+
+        // 호버 대상 지정 (이미지 박스 포함)
+        const targets = document.querySelectorAll('a, button, .image-box, .grid-item');
+        targets.forEach(t => {
+            t.addEventListener('mouseenter', () => bundle.classList.add('cursor-hovering'));
+            t.addEventListener('mouseleave', () => bundle.classList.remove('cursor-hovering'));
+        });
+
+        // 스크롤 리빌 애니메이션
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+    </script>
+</body>
+</html>
